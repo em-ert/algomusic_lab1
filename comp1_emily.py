@@ -102,13 +102,13 @@ def main():
         n = note.Note(pitch, quarterLength = random.choice([0.25, 0.5, 1]))
         melody.append(n)
 
-    for pitch in inversion.pitches:
-        n = note.Note(pitch, quarterLength = random.choice([0.25, 0.5, 1]))
-        melody.append(n)
+    # for pitch in inversion.pitches:
+    #     n = note.Note(pitch, quarterLength = random.choice([0.25, 0.5, 1]))
+    #     melody.append(n)
 
-    for pitch in r_inversion.pitches:
-        n = note.Note(pitch, quarterLength = random.choice([0.25, 0.5, 1]))
-        melody.append(n)
+    # for pitch in r_inversion.pitches:
+    #     n = note.Note(pitch, quarterLength = random.choice([0.25, 0.5, 1]))
+    #     melody.append(n)
     
     for pitch in retrograde.pitches:
         n = note.Note(pitch, quarterLength = random.choice([0.25, 0.5, 1]))
