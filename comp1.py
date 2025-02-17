@@ -202,7 +202,7 @@ def main():
                 # Get the nearest midi value within the key
                 final_note_midi = get_rand_nearest(curr_scale_midi, temp_note_midi)
                 # print(f'True MIDI: {final_note_midi}')
-                quarter_length = random.choice([0.25, 0.5, 1])
+                quarter_length = random.choice([0.25, 0.5, 1], p=[.1, .5, .4])
                 
                 melody.append(note.Note(pitch.Pitch(final_note_midi), quarterLength=quarter_length))
                 
