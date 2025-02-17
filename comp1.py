@@ -91,18 +91,20 @@ def get_scale_for_key_tonic_blues(local_key: key.Key, global_key: Optional[key.K
         return scale.MinorScale(local_key.tonic)
     
     
-def get_midi_list(pitches: list):
-    """Converts a list of pitches (of type pitch.Pitch) into a list of integers representing the pitches' respective midi values.
+def get_midi_list(curr_scale):
+    """Converts a scale into a list of integers representing the pitches' in the scale's respective midi values.
 
     Args:
-        pitches (list): A list of pitch.Pitch objects
+        curr_scale (scale): A scale object
 
     Returns:
         list: The respective midi values for each pitch.Pitch object in `pitches`
     """
     midi = []
-    for p in pitches:
-        midi.append(p.midi)
+    
+    for octave in range(0, 9):  # MIDI range typically 0-127
+        for pitch in curr_scale.getPitches(f'C{octave}', f'B{octave}'):
+            midi.append(pitch.midi)
         
     return midi
     
@@ -143,6 +145,11 @@ def main():
     # Add time signature and key information to the score
     time_signature = meter.TimeSignature('4/4')
     k = key.Key('C')
+    for letter in ['A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab']:
+        if letter in sys.argv:
+            k = key.Key(letter)
+            print(f'Key set to {letter}')
+
     score.append(time_signature)
     score.append(k)
     
@@ -187,7 +194,7 @@ def main():
                 curr_scale = get_scale_for_key_tonic_blues(key_list[current_chord_idx], k)
                 # print(f'Key: {key_list[current_chord_idx]}')
                 # Get a list of midi notes in the current scale
-                curr_scale_midi = get_midi_list(curr_scale.pitches)
+                curr_scale_midi = get_midi_list(curr_scale)
                 # print(f'Scale MIDI: {curr_scale_midi}')
                 # Get the unaltered note's midi value
                 temp_note_midi = p.midi
