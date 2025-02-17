@@ -205,9 +205,9 @@ def main():
                 if measure_pos > 4:
                     current_chord_idx += 1
                     measure_pos -= 4
-
-    score.insert(1, chords)
-    score.insert(1, melody)
+    
+    score.insert(0, melody)
+    score.insert(0, chords)
     score.insert(0, metadata.Metadata())
     score.metadata.title = 'New Blues'
     score.metadata.composer = 'Emily Ertle and Dan Little'
