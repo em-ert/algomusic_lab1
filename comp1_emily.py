@@ -67,7 +67,7 @@ def expand(input: str, stream: stream.Part, k: key.Key, key_list: Optional[list]
         if key_list is not None:
             key_list.append(k)
             
-            y
+            
 def get_rand_nearest(l: list, i: int):
     """Gets the nearest number in a list `l` to an integer `i`. If there are multiple nearest numbers, it will return one of these at random
 
