@@ -71,7 +71,42 @@ def expand(input: str, stream: stream.Part, k: key.Key, key_list: Optional[list]
         if key_list is not None:
             key_list.append(k)
             
-            
+    
+def get_scale_for_key_tonic_blues(local_key: key.Key, global_key: Optional[key.Key]=None):
+    """Returns a scale to use for the melody depending on the key. If the local key is the same as the global key, returns the weighted hexatonic blues scale. Otherwise, returns a major or minor scale depending on whether the local key is major or minor, respectively.
+
+    Args:
+        local_key (key.Key): The local key object.
+        global_key (key.Key, optional): The global key object. Defaults to None.
+
+    Returns:
+        scale: The relevant scale object based on the local and global keys.
+    """
+    if global_key is not None:
+        if local_key.name == global_key.name:
+            return scale.WeightedHexatonicBlues(global_key.tonic)
+    if local_key.type == 'major':
+        return scale.MajorScale(local_key.tonic)
+    else:
+        return scale.MinorScale(local_key.tonic)
+    
+    
+def get_midi_list(pitches: list):
+    """Converts a list of pitches (of type pitch.Pitch) into a list of integers representing the pitches' respective midi values.
+
+    Args:
+        pitches (list): A list of pitch.Pitch objects
+
+    Returns:
+        list: The respective midi values for each pitch.Pitch object in `pitches`
+    """
+    midi = []
+    for p in pitches:
+        midi.append(p.midi)
+        
+    return midi
+    
+    
 def get_rand_nearest(l: list, i: int):
     """Gets the nearest number in a list `l` to an integer `i`. If there are multiple nearest numbers, it will return one of these at random
 
@@ -96,42 +131,6 @@ def get_rand_nearest(l: list, i: int):
     
     return l[x]
 
-
-def get_midi_list(pitches: list):
-    """Converts a list of pitches (of type pitch.Pitch) into a list of integers representing the pitches' respective midi values.
-
-    Args:
-        pitches (list): A list of pitch.Pitch objects
-
-    Returns:
-        list: The respective midi values for each pitch.Pitch object in `pitches`
-    """
-    midi = []
-    for p in pitches:
-        midi.append(p.midi)
-        
-    return midi
-
-
-def get_scale_for_key_tonic_blues(local_key: key.Key, global_key: Optional[key.Key]=None):
-    """Returns a scale to use for the melody depending on the key. If the local key is the same as the global key, returns the weighted hexatonic blues scale. Otherwise, returns a major or minor scale depending on whether the local key is major or minor, respectively.
-
-    Args:
-        local_key (key.Key): The local key object.
-        global_key (key.Key, optional): The global key object. Defaults to None.
-
-    Returns:
-        scale: The relevant scale object based on the local and global keys.
-    """
-    if global_key is not None:
-        if local_key.name == global_key.name:
-            return scale.WeightedHexatonicBlues(global_key.tonic)
-    if local_key.type == 'major':
-        return scale.MajorScale(local_key.tonic)
-    else:
-        return scale.MinorScale(local_key.tonic)
-    
-    
 
 def main():
     # Define 
@@ -187,7 +186,7 @@ def main():
                 # Figure out what scale to use
                 curr_scale = get_scale_for_key_tonic_blues(key_list[current_chord_idx], k)
                 # print(f'Key: {key_list[current_chord_idx]}')
-                # Get a list of midi notes in the currenct scale
+                # Get a list of midi notes in the current scale
                 curr_scale_midi = get_midi_list(curr_scale.pitches)
                 # print(f'Scale MIDI: {curr_scale_midi}')
                 # Get the unaltered note's midi value
