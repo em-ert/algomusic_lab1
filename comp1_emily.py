@@ -179,16 +179,16 @@ def main():
             for p in row.pitches:
                 # Figure out what scale to use
                 curr_scale = get_scale_for_key_tonic_blues(key_list[current_chord_idx], k)
-                print(f'Key: {key_list[current_chord_idx]}')
+                # print(f'Key: {key_list[current_chord_idx]}')
                 # Get a list of midi notes in the currenct scale
                 curr_scale_midi = get_midi_list(curr_scale.pitches)
-                print(f'Scale MIDI: {curr_scale_midi}')
+                # print(f'Scale MIDI: {curr_scale_midi}')
                 # Get the unaltered note's midi value
                 temp_note_midi = p.midi
-                print(f'Raw MIDI: {temp_note_midi}')
+                # print(f'Raw MIDI: {temp_note_midi}')
                 # Get the nearest midi value within the key
                 final_note_midi = get_rand_nearest(curr_scale_midi, temp_note_midi)
-                print(f'True MIDI: {final_note_midi}')
+                # print(f'True MIDI: {final_note_midi}')
                 quarter_length = random.choice([0.25, 0.5, 1])
                 
                 melody.append(note.Note(pitch.Pitch(final_note_midi), quarterLength=quarter_length))
