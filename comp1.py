@@ -138,6 +138,7 @@ def main():
     # Set up the score
     score = stream.Score()
     chords = stream.Part()
+    chords.append(clef.BassClef())
     melody = stream.Part()
 
     # Add time signature and key information to the score
@@ -155,6 +156,8 @@ def main():
     chord_length = 0
     for chord in chords.notes:
         chord_length += chord.duration.quarterLength
+        
+    chords = chords.transpose(-12)
 
     # Create the prime row
     prime_row = np.arange(12)
